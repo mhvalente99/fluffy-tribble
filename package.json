@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --poll --inspect --transpile-only --ignore-watch node_modules --respawn rentalx/src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
