@@ -1,19 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
-import { deleteFile } from "../../../../utils/file";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { deleteFile } from "@utils/file";
 
 interface IRequest {
     user_id: string;
     avatar_file: string;
 }
-
-// OK Adicionar coluna avatar na tabela de users
-// OK Refatorar o usuario com coluna avatar
-// Configuração upload no muter
-// Criar regra de negocio do upload
-// Criar controller
-// Criar rota
 
 @injectable()
 class UpdateUserAvatarUseCase {

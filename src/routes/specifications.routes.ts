@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { container } from "tsyringe";
 
-import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-import { CreateSpecificationService } from "../modules/cars/services/CreateSpecificationService";
+import { ensureAuthenticated } from "@middlewares/ensureAuthenticated";
+import { CreateSpecificationService } from "@modules/cars/services/CreateSpecificationService";
 
 const specificationsRoutes = Router();
 
