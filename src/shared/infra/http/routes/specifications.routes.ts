@@ -4,9 +4,11 @@ import { container } from "tsyringe";
 import { CreateSpecificationService } from "@modules/cars/services/CreateSpecificationService";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+import { ensureAdmin } from "../middlewares/ensureAdmin";
+
 const specificationsRoutes = Router();
 
-specificationsRoutes.use(ensureAuthenticated);
+specificationsRoutes.use(ensureAuthenticated, ensureAdmin);
 specificationsRoutes.post("/", async (request, response) => {
     const { name, description } = request.body;
 
