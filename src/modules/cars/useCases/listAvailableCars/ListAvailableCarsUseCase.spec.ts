@@ -1,14 +1,16 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 
-import { ListCarsUseCase } from "./ListCarsUseCase";
+import { ListAvailableCarsUseCase } from "./ListAvailableCarsUseCase";
 
-let listCarsUseCase: ListCarsUseCase;
+let listAvailableCarsUseCase: ListAvailableCarsUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("List Cars", () => {
     beforeEach(() => {
         carsRepositoryInMemory = new CarsRepositoryInMemory();
-        listCarsUseCase = new ListCarsUseCase(carsRepositoryInMemory);
+        listAvailableCarsUseCase = new ListAvailableCarsUseCase(
+            carsRepositoryInMemory
+        );
     });
 
     it("should be able to list all availables cars", async () => {
@@ -22,7 +24,7 @@ describe("List Cars", () => {
             category_id: "4b2bdfe8-ed08-4f16-a8ef-07fa0b7f004c",
         });
 
-        const cars = await listCarsUseCase.execute({});
+        const cars = await listAvailableCarsUseCase.execute({});
 
         expect(cars).toEqual([car]);
     });
@@ -38,7 +40,9 @@ describe("List Cars", () => {
             category_id: "4b2bdfe8-ed08-4f16-a8ef-07fa0b7f004c",
         });
 
-        const cars = await listCarsUseCase.execute({ brand: "Test Brand" });
+        const cars = await listAvailableCarsUseCase.execute({
+            brand: "Test Brand",
+        });
 
         expect(cars).toEqual([car]);
     });
@@ -54,7 +58,9 @@ describe("List Cars", () => {
             category_id: "4b2bdfe8-ed08-4f16-a8ef-07fa0b7f004c",
         });
 
-        const cars = await listCarsUseCase.execute({ name: "Name Name" });
+        const cars = await listAvailableCarsUseCase.execute({
+            name: "Name Name",
+        });
 
         expect(cars).toEqual([car]);
     });
@@ -70,7 +76,7 @@ describe("List Cars", () => {
             category_id: "4b2bdfe8-ed08-4f16-a8ef-07fa0b7f004c",
         });
 
-        const cars = await listCarsUseCase.execute({
+        const cars = await listAvailableCarsUseCase.execute({
             category_id: "4b2bdfe8-ed08-4f16-a8ef-07fa0b7f004c",
         });
 
