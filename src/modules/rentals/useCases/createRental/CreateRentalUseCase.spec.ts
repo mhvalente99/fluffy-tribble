@@ -24,4 +24,20 @@ describe("Create Rental", () => {
         expect(rental).toHaveProperty("id");
         expect(rental).toHaveProperty("start_date");
     });
+
+    it("should not be able to create a new rental if there is another open to the same user", async () => {
+        await createRentalUseCase.execute({
+            user_id: "user_rental",
+            car_id: "car_user",
+            expected_return_date: new Date(),
+        });
+
+        expect(async () => {
+            await createRentalUseCase.execute({
+                user_id: "user_rental",
+                car_id: "new_car_user",
+                expected_return_date: new Date(),
+            });
+        }).rejects.toBeInstanceOf(AppError);
+    });
 });
