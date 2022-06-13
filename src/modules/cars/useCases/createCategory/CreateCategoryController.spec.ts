@@ -7,6 +7,7 @@ import createConnection from "@shared/infra/database/typeorm";
 import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
+let tokenAdmin: string;
 
 describe("Create Category Controller", () => {
     beforeAll(async () => {
@@ -22,6 +23,13 @@ describe("Create Category Controller", () => {
             VALUES('${id}', 'admin', 'admin@rentalx.com.br', '${password}', true, 'now()', '')
             `
         );
+
+        const responseToken = await request(app).post("/sessions").send({
+            email: "admin@rentalx.com.br",
+            password: "admin",
+        });
+
+        tokenAdmin = responseToken.body.token;
     });
 
     afterAll(async () => {
@@ -30,13 +38,6 @@ describe("Create Category Controller", () => {
     });
 
     it("should be able to create a new category", async () => {
-        const responseToken = await request(app).post("/sessions").send({
-            email: "admin@rentalx.com.br",
-            password: "admin",
-        });
-
-        const { token } = responseToken.body;
-
         const response = await request(app)
             .post("/categories")
             .send({
@@ -44,9 +45,23 @@ describe("Create Category Controller", () => {
                 description: "Category Test",
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${tokenAdmin}`,
             });
 
         expect(response.status).toBe(201);
+    });
+
+    it("should not be able to create a new category with name exists", async () => {
+        const response = await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Test",
+                description: "Category Test Same Name",
+            })
+            .set({
+                Authorization: `Bearer ${tokenAdmin}`,
+            });
+
+        expect(response.status).toBe(500);
     });
 });
