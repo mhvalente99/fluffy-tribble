@@ -5,6 +5,7 @@ interface IDateProvider {
     dateNow(): Date;
     addOneDayInDate(date: Date): Date;
     addDaysInDate(days: number, date: Date): Date;
+    addHoursInDate(hours: number, date: Date): Date;
 }
 
 export { IDateProvider };
