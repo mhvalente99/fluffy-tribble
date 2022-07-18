@@ -29,7 +29,7 @@ describe("Create Category Controller", () => {
             password: "admin",
         });
 
-        tokenAdmin = responseToken.body.token;
+        tokenAdmin = responseToken.body.refresh_token;
     });
 
     afterAll(async () => {
