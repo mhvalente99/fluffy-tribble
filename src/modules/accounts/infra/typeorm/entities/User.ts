@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -26,6 +27,13 @@ class User {
 
     @CreateDateColumn()
     created_at: Date;
+
+    @Expose({ name: "avatar_url" })
+    avatar_url(): string {
+        return process.env.disk === "local"
+            ? `${process.env.APP_API_URL}/avatar/${this.avatar}`
+            : `${process.env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
+    }
 
     constructor() {
         if (!this.id) {
